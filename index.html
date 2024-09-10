@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>תרשים סכימת טיפול כללית במטופל</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.11.0/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .important-note {
+            background-color: #ffeb3b;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .mda-logo {
+            display: block;
+            margin: 0 auto;
+            max-width: 200px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: right;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .mermaid {
+            margin-bottom: 20px;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="images.png" alt="מגן דוד אדום" class="mda-logo">
+        <h1>תרשים סכימת טיפול כללית במטופל</h1>
+        <div class="important-note">
+            מה שהורג קודם - יטופל קודם!
+        </div>
+        
+        <div class="mermaid">
+graph TD
+    Start([התחלה]) --> Safety{בדוק בטיחות סביבתית}
+    Safety -->|לא בטוח| EvacuateArea[פנה את האזור או העבר את הפצוע]
+    Safety -->|בטוח| CheckResponse{בדוק תגובה}
+    
+    CheckResponse -->|לא מגיב| CAB[התחל סכמת CAB]
+    CAB --> Circulation[C - בצע עיסוי לב, 100-120 לחיצות לדקה]
+    Circulation --> OpenAirway[A - פתח נתיב אוויר ונקה הפרשות]
+    OpenAirway --> CheckBreathing[B - בדוק נשימה]
+    CheckBreathing -->|אין נשימה| StartCPR[התחל החייאה]
+    StartCPR --> CallHelp[הזעק עזרה והמשך CPR]
+    
+    CallHelp --> GetAED[השג דפיברילטור]
+    GetAED --> AttachAED[חבר דפיברילטור]
+    AttachAED --> AnalyzeRhythm{הדפיברילטור מנתח קצב}
+    AnalyzeRhythm -->|שוק מומלץ| DeliverShock[תן שוק חשמלי]
+    AnalyzeRhythm -->|שוק לא מומלץ| ContinueCPR[המשך CPR]
+    DeliverShock --> ContinueCPR
+    
+    ContinueCPR --> Ratio30to2[בצע 30 עיסויים ו-2 הנשמות]
+    Ratio30to2 --> AttachMask[חבר מסכת הנשמה וחמצן]
+    AttachMask --> CheckPulseEvery2Min{בדוק דופק כל 2 דקות}
+    CheckPulseEvery2Min -->|אין דופק| AnalyzeRhythm
+    CheckPulseEvery2Min -->|יש דופק| ROSC[חזרה של מחזור דם ספונטני]
+    
+    ROSC --> ABCDE[עבור לסכמת ABCDE]
+    
+    CheckResponse -->|מגיב| ABCDE
+    
+    ABCDE --> Airway{A - נתיב אוויר פתוח?}
+    Airway -->|לא| ClearAirway[פתח נתיב אוויר ונקה הפרשות]
+    Airway -->|כן| Breathing{B - נשימה תקינה?}
+    
+    Breathing -->|לא| AssistBreathing[סייע בנשימה, תן חמצן עם הטיית הראש]
+    Breathing -->|כן| Circulation{C - מחזור דם תקין?}
+    
+    Circulation -->|לא| ControlBleeding[עצור דימומים, טפל בהלם]
+    Circulation -->|כן| DisabilityCheck{D - מצב הכרה}
+    
+    DisabilityCheck --> AVPU{בדוק לפי AVPU}
+    AVPU --> AlertCheck{A - ערני?}
+    AlertCheck -->|כן| Exposure[E - בדוק חשיפה]
+    AlertCheck -->|לא| VerbalCheck{V - מגיב לקול?}
+    VerbalCheck -->|כן| Exposure
+    VerbalCheck -->|לא| PainCheck{P - מגיב לכאב?}
+    PainCheck -->|כן| Exposure
+    PainCheck -->|לא| Unresponsive[U - לא מגיב]
+    Unresponsive --> NeurologicalExam[בצע בדיקה נוירולוגית מקיפה]
+    
+    Exposure --> VitalSigns[בדוק סימנים חיוניים]
+    VitalSigns --> CheckPulse[בדוק דופק]
+    VitalSigns --> CheckBP[בדוק לחץ דם]
+    VitalSigns --> CheckRR[בדוק קצב נשימה]
+    VitalSigns --> CheckGlucose[בדוק רמת סוכר]
+    
+    CheckPulse & CheckBP & CheckRR & CheckGlucose --> CompareToNormal[השווה לערכים תקינים לפי גיל]
+    CompareToNormal --> DecideNextSteps[החלט על המשך טיפול]
+    DecideNextSteps --> Reassess[הערך מחדש]
+    Reassess --> ABCDE
+        </div>
+
+        <section id="measurements">
+            <h2>טבלאות מדדים חיוניים</h2>
+            
+            <h3>לחץ דם תקין לפי גיל</h3>
+            <table>
+                <tr>
+                    <th>גיל</th>
+                    <th>סיסטולי (mmHg)</th>
+                    <th>דיאסטולי (mmHg)</th>
+                </tr>
+                <tr>
+                    <td>עד חודש</td>
+                    <td>60-95</td>
+                    <td>25-55</td>
+                </tr>
+                <tr>
+                    <td>עד שנה</td>
+                    <td>70-105</td>
+                    <td>30-60</td>
+                </tr>
+                <tr>
+                    <td>ילד (שנים 2-10)</td>
+                    <td>70-130</td>
+                    <td>35-85</td>
+                </tr>
+                <tr>
+                    <td>מבוגר</td>
+                    <td>90-140</td>
+                    <td>60-90</td>
+                </tr>
+            </table>
+
+            <h3>דופק תקין לפי גיל</h3>
+            <table>
+                <tr>
+                    <th>גיל</th>
+                    <th>מספר פעימות לדקה</th>
+                </tr>
+                <tr>
+                    <td>עד 3 חודשים</td>
+                    <td>85-205</td>
+                </tr>
+                <tr>
+                    <td>עד שנתיים</td>
+                    <td>100-190</td>
+                </tr>
+                <tr>
+                    <td>2-10 שנים</td>
+                    <td>60-140</td>
+                </tr>
+                <tr>
+                    <td>מעל 10 שנים</td>
+                    <td>60-100</td>
+                </tr>
+            </table>
+
+            <h3>קצב נשימה תקין לפי גיל</h3>
+            <table>
+                <tr>
+                    <th>גיל</th>
+                    <th>מספר נשימות לדקה</th>
+                </tr>
+                <tr>
+                    <td>תינוק עד גיל שנה</td>
+                    <td>30-60</td>
+                </tr>
+                <tr>
+                    <td>גיל 1-3</td>
+                    <td>24-40</td>
+                </tr>
+                <tr>
+                    <td>גיל 4-5</td>
+                    <td>22-34</td>
+                </tr>
+                <tr>
+                    <td>גיל 6-12</td>
+                    <td>18-30</td>
+                </tr>
+                <tr>
+                    <td>מעל גיל 12</td>
+                    <td>12-20</td>
+                </tr>
+            </table>
+        </section>
+    </div>
+
+    <footer>
+        כל הזכויות שמורות למתן רצר 2024
+    </footer>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</body>
+</html>
